@@ -60,8 +60,8 @@
     "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     "paths": {
       "*": ["./src/*"],
-      "@screens/*": ["./src/screens/*"],
-      "@screens": ["./src/screens"],
+      "@screens/*": ["src/screens/*"],
+      "@screens": ["src/screens"],
       "@constants/*": ["./src/constants/*"],
       "@constants": ["./src/constants"],
       "@components/*": ["./src/components/*"],
