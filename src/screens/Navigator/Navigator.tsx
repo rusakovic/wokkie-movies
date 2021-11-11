@@ -8,6 +8,7 @@ import {Routes} from 'routes/routes';
 import {styles} from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FilmDetailsScreen, FilmGenresScreen, SearchFilmScreen} from 'screens';
+import SearchScreen from 'screens/SearchScreen';
 
 interface NavigatorProps {}
 
@@ -53,7 +54,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
                 />
                 <Tab.Screen
                   name={Routes.SearchFilmScreen}
-                  component={SearchFilmScreen}
+                  component={SearchScreen}
                   options={{
                     tabBarIcon: ({focused}) => (
                       <Ionicons
