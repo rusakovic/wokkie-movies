@@ -3,7 +3,6 @@ import ContainerCenter from 'components/Containers/ContainerCenter';
 import {flatten, uniq, keyBy} from 'lodash';
 import {moviesMock} from 'mock/movies';
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {GenresWithKeysType} from './types';
 

@@ -13,7 +13,7 @@ export interface Movie {
   length: string;
   overview: string;
   poster: string;
-  released_on: Date;
+  released_on: string;
   slug: string;
   title: string;
 }

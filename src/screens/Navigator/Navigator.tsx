@@ -26,7 +26,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
   return (
     <NavigationContainer theme={AppTheme}>
       <StackNavigator.Navigator initialRouteName={Routes.FilmGenresScreen}>
-        {/* <StackNavigator.Screen name={Routes.RootStack}>
+        <StackNavigator.Screen name={Routes.RootStack}>
           {() => {
             return (
               <Tab.Navigator>
@@ -75,7 +75,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
               </Tab.Navigator>
             );
           }}
-        </StackNavigator.Screen> */}
+        </StackNavigator.Screen>
         <StackNavigator.Screen
           name={Routes.FilmDetailsScreen}
           component={FilmDetailsScreen}
