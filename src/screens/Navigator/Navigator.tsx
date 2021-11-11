@@ -7,7 +7,7 @@ import {SafeAreaView, Text} from 'react-native';
 import {Routes} from 'routes/routes';
 import {styles} from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {FilmGenresScreen, SearchFilmScreen} from 'screens';
+import {FilmDetailsScreen, FilmGenresScreen, SearchFilmScreen} from 'screens';
 
 interface NavigatorProps {}
 
@@ -26,7 +26,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
   return (
     <NavigationContainer theme={AppTheme}>
       <StackNavigator.Navigator initialRouteName={Routes.FilmGenresScreen}>
-        <StackNavigator.Screen name={Routes.RootStack}>
+        {/* <StackNavigator.Screen name={Routes.RootStack}>
           {() => {
             return (
               <Tab.Navigator>
@@ -75,7 +75,12 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
               </Tab.Navigator>
             );
           }}
-        </StackNavigator.Screen>
+        </StackNavigator.Screen> */}
+        <StackNavigator.Screen
+          name={Routes.FilmDetailsScreen}
+          component={FilmDetailsScreen}
+          options={{headerTitle: 'Movie info'}}
+        />
       </StackNavigator.Navigator>
     </NavigationContainer>
   );

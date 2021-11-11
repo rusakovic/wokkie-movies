@@ -42,6 +42,10 @@ const styled = {
     blue: {
       standardIosBlue: '#C2DFEA',
     },
+
+    yellow: {
+      star: '#dcaa62',
+    },
   },
   spaceVertical: {
     xxxs: hp(1),
