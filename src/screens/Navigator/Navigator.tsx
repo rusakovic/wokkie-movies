@@ -36,7 +36,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
                   options={{
                     tabBarIcon: ({focused}) => (
                       <Ionicons
-                        name="ios-play-back-outline"
+                        name="ios-film-outline"
                         color={
                           focused
                             ? styled.colors.grey70opacity
@@ -57,7 +57,7 @@ const Navigator: React.FunctionComponent<NavigatorProps> = props => {
                   options={{
                     tabBarIcon: ({focused}) => (
                       <Ionicons
-                        name="ios-rocket-outline"
+                        name="ios-search-outline"
                         color={
                           focused
                             ? styled.colors.grey70opacity
