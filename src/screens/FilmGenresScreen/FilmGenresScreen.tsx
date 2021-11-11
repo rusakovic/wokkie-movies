@@ -1,8 +1,11 @@
+import {MovieGenreList} from 'components';
+import ContainerCenter from 'components/Containers/ContainerCenter';
 import {flatten, uniq, keyBy} from 'lodash';
 import {moviesMock} from 'mock/movies';
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {GenresWithKeysType} from './types';
 
 interface FilmGenresScreenProps {}
 
@@ -17,7 +20,7 @@ const FilmGenresScreen: React.FunctionComponent<FilmGenresScreenProps> =
       uniqGenres,
     );
 
-    const genresWithKeys = uniqGenres.map(genre => {
+    const genresWithKeys: GenresWithKeysType[] = uniqGenres.map(genre => {
       return {
         genreKey: genre,
         movies: [],
@@ -36,15 +39,17 @@ const FilmGenresScreen: React.FunctionComponent<FilmGenresScreenProps> =
       );
     });
     return (
-      <View>
+      <ContainerCenter isContainer>
         <FlatList
           data={genresWithKeys}
           keyExtractor={item => item.genreKey}
-          renderItem={({item}) => {
-            return <Text>{item.genreKey}</Text>;
+          renderItem={({item}: {item: GenresWithKeysType}) => {
+            return (
+              <MovieGenreList genre={item.genreKey} movies={item.movies} />
+            );
           }}
         />
-      </View>
+      </ContainerCenter>
     );
   };
 
