@@ -66,6 +66,8 @@
       "@constants": ["./src/constants"],
       "@components/*": ["./src/components/*"],
       "@components": ["./src/components"],
+      "@redux/*": ["./src/redux/*"],
+      "@redux": ["./src/redux"],
     },
   },
   "exclude": [

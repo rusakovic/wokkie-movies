@@ -21,6 +21,7 @@ module.exports = {
           '@types': './src/types',
           '@routes': './src/routes',
           '@constants': './src/constants',
+          '@redux': './src/redux',
         },
       },
     ],
