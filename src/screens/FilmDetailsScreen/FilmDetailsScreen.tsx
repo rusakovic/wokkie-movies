@@ -7,7 +7,7 @@ import React from 'react';
 import {Image, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {
-  heightPercentageToDP,
+  heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
@@ -15,11 +15,11 @@ interface FilmDetailsScreenProps {}
 
 const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
   props => {
-    const movie = moviesMock.movies[9];
+    const movie = moviesMock.movies[14];
     return (
-      <ContainerCenter style={{height: '100%'}}>
+      <ContainerCenter style={{height: hp(100)}}>
         {/* BACKDROP COVER */}
-        <ContainerCenter style={{height: '30%'}} isFullWidth>
+        <ContainerCenter style={{height: hp(30)}} isFullWidth>
           <ContainerCenter isFullWidth>
             <Image
               source={{uri: movie.backdrop}}
@@ -29,7 +29,7 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
           </ContainerCenter>
           <View
             style={{
-              height: '20%',
+              height: '25%',
               backgroundColor: styled.colors.black,
               position: 'absolute',
               width: '100%',
@@ -42,7 +42,7 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
           style={{
             flex: 1,
             height: '100%',
-            top: -heightPercentageToDP(10),
+            top: -hp(11),
           }}>
           {/* MOVIE DETAILS */}
           <ContainerCenter
@@ -66,8 +66,6 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
               </ContainerCenter>
               <ContainerCenter
                 style={{
-                  // borderWidth: 2,
-                  // borderColor: 'orange',
                   alignItems: 'flex-end',
                   justifyContent: 'space-between',
                   width: '70%',
@@ -80,7 +78,7 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
                     marginTop: '15%',
                     alignItems: 'center',
                   }}>
-                  <View style={{width: '80%'}}>
+                  <View style={{width: '75%'}}>
                     <DefaultText
                       s
                       fontColor={styled.colors.white.white}
@@ -105,8 +103,7 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
                     height: '30%',
                     width: '40%',
                     justifyContent: 'space-between',
-                    borderColor: 'red',
-                    // borderWidth: 2,
+
                     padding: 2,
                   }}>
                   <ButtonWithShadowSmall
@@ -148,7 +145,7 @@ const FilmDetailsScreen: React.FunctionComponent<FilmDetailsScreenProps> =
             style={{
               marginHorizontal: wp(4),
               marginTop: wp(10),
-              height: 500,
+              // height: hp(60),
             }}>
             {/* CAST */}
             <ContainerCenter isMarginVertical2 style={{width: '90%'}}>
