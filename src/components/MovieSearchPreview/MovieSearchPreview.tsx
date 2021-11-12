@@ -6,8 +6,11 @@ import DefaultText from 'components/Text/DefaultText/DefaultText';
 import React, {useState} from 'react';
 import {Image, Modal, Pressable, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootStackParamList, Routes} from 'routes/routes';
+import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actions';
+import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
+import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
 import {yearExtractor} from 'utils/date/yearExtractor';
 import {styles} from './styles';
 
@@ -29,6 +32,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
   isFavorite,
 }) => {
   const dispatch = useDispatch();
+  const hiddenMoviesIds = useSelector(hiddenMoviesSelector);
 
   const [isPreviewOpened, setIsPreviewOpened] = useState(false);
   const onFavoriteToggle = () => {
@@ -36,7 +40,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
   };
 
   const onHiddenToggle = () => {
-    // dispatch(hiddenMovieToggleRequested(id));
+    dispatch(hiddenMovieToggleRequested(id));
   };
 
   const {navigate} =
@@ -115,7 +119,11 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
         <View style={styles.buttonsWrapper}>
           <ButtonWithShadowSmall
             isIcon
-            iconName={isHidden ? 'md-eye-off-outline' : 'eye-outline'}
+            iconName={
+              isMoviesIdInArray(hiddenMoviesIds, id)
+                ? 'md-eye-off-outline'
+                : 'eye-outline'
+            }
             onPress={onHiddenToggle}
             isDisabled={false}
             iconSize={15}
