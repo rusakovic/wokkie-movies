@@ -2,8 +2,8 @@ import {RootState} from '@redux/reducer';
 import {SearchMovieDataType, SearchMovieResultInitialStateType} from './types';
 
 export const searchMovieResultSelector = ({
-  searchMovieResult,
-}: RootState): SearchMovieResultInitialStateType => searchMovieResult;
+  searchedMovies,
+}: RootState): SearchMovieResultInitialStateType => searchedMovies;
 
 export const searchMovieResultDataResultsSelector = ({
   searchMovieResult: {data},

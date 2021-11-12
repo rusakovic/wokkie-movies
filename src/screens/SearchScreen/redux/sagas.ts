@@ -1,32 +1,30 @@
 import Config from 'react-native-config';
 import {call, put, takeLatest} from '@redux-saga/core/effects';
 import {searchMovieFailed, searchMovieSucceeded} from './actions';
-import {
-  Action,
-  ActionType,
-  SearchMovieDataType,
-  SearchMovieRequestedAction,
-} from './types';
+import {Action, ActionType, SearchMovieRequestedAction} from './types';
 import axios, {AxiosResponse} from 'axios';
-import {searchMoviesDataConverter} from './utils';
-import {THE_MOVIE_DB_API_URL} from '@constants/defaultUrls';
+import {DEFAULT_API_URL} from 'constants/api';
+import {Movie} from 'types/generalTypes';
 
 export function* SearchMovieResultRequestedSaga({
   searchInput,
 }: SearchMovieRequestedAction): Generator {
   try {
-    const searchUrl = `${THE_MOVIE_DB_API_URL}?api_key=${Config.MOVIE_DB_API_KEY}&language=en-US&page=1&query=${searchInput}`;
-    const response = (yield call(axios.get, searchUrl)) as AxiosResponse;
+    const fetchUrl = `${DEFAULT_API_URL}?=${searchInput}`;
+    const response = (yield call(axios.get, fetchUrl, {
+      headers: {
+        Authorization: `Bearer ${Config.MOVIE_DB_API_KEY}`,
+      },
+    })) as AxiosResponse;
+    const fetchedMovies = response.data.movies as Movie[];
 
-    const moviesWithIDs = (yield call(
-      searchMoviesDataConverter,
-      response.data,
-    )) as SearchMovieDataType;
-    yield put(searchMovieSucceeded(moviesWithIDs));
+    yield put(searchMovieSucceeded(fetchedMovies));
   } catch (error) {
-    yield call(console.error, error);
-    const errorMessage = `Movies not fetched => ${error.message}`;
-    yield put(searchMovieFailed(errorMessage));
+    if (error instanceof Error) {
+      yield call(console.error, error);
+      const errorMessage = `Movies not fetched => ${error.message}`;
+      yield put(searchMovieFailed(errorMessage));
+    }
   }
 }
 

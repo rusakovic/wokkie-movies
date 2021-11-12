@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
+  ListRenderItem,
   Pressable,
   SafeAreaView,
   Text,
@@ -10,18 +11,18 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 
 import {searchMovieRequested} from './redux/actions';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {searchMovieResultSelector} from './redux/selectors';
 import omit from 'lodash/omit';
 
 import styled from '@constants/styled';
 
-import {MovieDetailsType} from './redux/types';
 import {styles} from './styles';
-import {MoviePreview} from 'components';
+import {MoviePreview, MovieSearchPreview} from 'components';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import ContainerSpace from 'components/Containers/ContainerSpace';
 import HorizontalDivider from 'components/Dividers/Horizontal/HorizontalDivider';
+import {Movie} from 'types/generalTypes';
 
 interface SearchScreenProps {
   isScrollable: boolean;
@@ -31,6 +32,10 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   isScrollable,
 }) => {
   const dispatch = useDispatch();
+  const {data, errorMessage, isFailed, isLoading} = useSelector(
+    searchMovieResultSelector,
+  );
+  console.log('🚀 ~ file: SearchScreen.tsx ~ line 37 ~ data', data);
 
   const withoutHiddenMovies = [];
 
@@ -39,7 +44,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   const isSearchTextFilled = searchText.length;
 
   // Scroll to top of the list during new search result
-  const flatListRef = React.useRef<FlatList<MovieDetailsType>>(null);
+  const flatListRef = React.useRef<FlatList<Movie>>(null);
   const searchToTop = () => {
     flatListRef.current &&
       flatListRef.current.scrollToOffset({animated: true, offset: 0});
@@ -66,7 +71,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   };
 
   // Empty search result text
-  const isSearchResult = [].length;
+  const isSearchResult = data && data.length;
   const emptySearchResultText = searchText.length
     ? 'Movies not found'
     : 'No added movies to favorites';
@@ -86,7 +91,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
               style={styles.crossButtonWrapper}
               onPress={onClearSearchInputHandler}>
               <Icon
-                name="x-circle"
+                name="ios-backspace-outline"
                 size={20}
                 color={styled.colors.grey30opacity}
               />
@@ -105,35 +110,39 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
       </View>
       <HorizontalDivider marginVertical={5} />
       <SafeAreaView style={styles.searchResultContainer}>
-        {isSearchResult ? (
-          <FlatList
-            data={withoutHiddenMovies}
+        {isSearchResult && data ? (
+          <FlatList<Movie>
+            data={data}
             ref={flatListRef}
             scrollEnabled={isScrollable}
             keyboardShouldPersistTaps="handled"
-            keyExtractor={movie =>
-              movie?.id.toString() || Math.random().toString()
-            }
+            keyExtractor={movie => movie.id}
             renderItem={({
               item: {
-                id,
-                title,
+                poster,
+                backdrop,
+                cast,
+                director,
+                length,
                 overview,
-                release_date,
-                vote_average,
-                poster_path,
+                imdb_rating,
+                title,
+                released_on,
               },
             }) => (
               <View style={styles.moviePreviewWrapper}>
-                <MoviePreview
-                  id={id}
+                <MovieSearchPreview
                   title={title}
                   overview={overview}
-                  year={release_date || '----'}
-                  vote={vote_average}
-                  posterUrl={poster_path}
-                  isFavorite={favoriteMoviesIds.includes(id.toString())}
-                  isHidden={hiddenMoviesIds.includes(id)}
+                  year={released_on}
+                  rating={imdb_rating}
+                  posterUri={poster}
+                  backdrop={backdrop}
+                  cast={cast}
+                  director={director}
+                  length={length}
+                  isFavorite={false}
+                  isHidden={false}
                 />
               </View>
             )}

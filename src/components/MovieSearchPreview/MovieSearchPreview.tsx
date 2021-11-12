@@ -1,10 +1,12 @@
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
+import {MoviePreviewProps} from 'components/MoviePreview/types';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import React, {useState} from 'react';
 import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useDispatch} from 'react-redux';
+import {yearExtractor} from 'utils/date/yearExtractor';
 
 const styles = StyleSheet.create({
   mainWrapper: {flexDirection: 'row', flex: 1},
@@ -35,31 +37,24 @@ const styles = StyleSheet.create({
   },
 });
 
-interface MoviePreviewProps {
-  id: MovieDetailsType['id'];
-  title: MovieDetailsType['title'];
-  overview: MovieDetailsType['overview'];
-  year: MovieDetailsType['release_date'];
-  vote: MovieDetailsType['vote_average'];
-  posterUrl: MovieDetailsType['poster_path'];
+interface MovieSearchPreview extends MoviePreviewProps {
   isFavorite: boolean;
   isHidden: boolean;
 }
 
-const MovieSearchPreview: React.FunctionComponent<MoviePreviewProps> = ({
-  id,
-  title,
+const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
+  posterUri,
+  backdrop,
+  cast,
+  director,
+  length,
   overview,
+  rating,
+  title,
   year,
-  vote,
-  posterUrl,
   isFavorite,
   isHidden,
 }) => {
-  const extractedYear = year.slice(0, 4);
-  const convertedVote = vote.toString();
-  const voteWithZeros =
-    convertedVote.length === 1 ? `${convertedVote}.0` : convertedVote;
   const dispatch = useDispatch();
 
   const [isPreviewOpened, setIsPreviewOpened] = useState(false);
@@ -74,14 +69,14 @@ const MovieSearchPreview: React.FunctionComponent<MoviePreviewProps> = ({
   const showPreviewPosterToggle = () => {
     setIsPreviewOpened(prevState => !prevState);
   };
-
+  const formattedYear = yearExtractor(year);
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.posterWrapper}>
         <Pressable onPress={showPreviewPosterToggle}>
           <Image
             source={{
-              uri: '',
+              uri: posterUri,
             }}
             style={styles.poster}
             resizeMode="contain"
@@ -114,11 +109,11 @@ const MovieSearchPreview: React.FunctionComponent<MoviePreviewProps> = ({
               {title}
             </DefaultText>
             <DefaultText style={{width: '20%'}} isTextAlignCenter s>
-              {voteWithZeros}
+              {rating}
             </DefaultText>
           </View>
 
-          <DefaultText xs>{extractedYear}</DefaultText>
+          <DefaultText xs>{formattedYear}</DefaultText>
           <DefaultText xxs2 numberOfLines={3} fitText={false}>
             {overview}
           </DefaultText>
