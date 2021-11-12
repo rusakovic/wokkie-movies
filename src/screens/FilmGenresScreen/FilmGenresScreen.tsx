@@ -1,55 +1,56 @@
 import {MovieGenreList} from 'components';
 import ContainerCenter from 'components/Containers/ContainerCenter';
+import DefaultText from 'components/Text/DefaultText/DefaultText';
 import {flatten, uniq, keyBy} from 'lodash';
 import {moviesMock} from 'mock/movies';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchMovieRequested} from './redux/actions';
+import {fetchMovieResultSelector} from './redux/selectors';
 import {GenresWithKeysType} from './types';
 
-interface FilmGenresScreenProps {}
+const FilmGenresScreen: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
 
-const FilmGenresScreen: React.FunctionComponent<FilmGenresScreenProps> =
-  props => {
-    const [movies, setMovies] = useState(moviesMock);
-    const allGenres = movies.movies.map(movie => movie.genres);
-    const combineGenres = flatten(allGenres);
-    const uniqGenres = uniq(combineGenres);
-    console.log(
-      '🚀 ~ file: SearchFilmScreen.tsx ~ line 15 ~ uniqGenres',
-      uniqGenres,
-    );
+  const {movies, isLoading, isFailed, errorMessage} = useSelector(
+    fetchMovieResultSelector,
+  );
 
-    const genresWithKeys: GenresWithKeysType[] = uniqGenres.map(genre => {
-      return {
-        genreKey: genre,
-        movies: [],
-      };
-    });
-    console.log(
-      '🚀 ~ file: SearchFilmScreen.tsx ~ line 26 ~ genresWithKeys',
-      genresWithKeys,
-    );
+  useEffect(() => {
+    dispatch(fetchMovieRequested());
+  }, []);
 
-    const genresAsObject = keyBy(genresWithKeys, 'genreKey');
-
-    const sortMoviesByGenres = movies.movies.map(movie => {
-      const genres = movie.genres.map(genre =>
-        genresAsObject[genre].movies.push(movie),
-      );
-    });
+  if (isLoading) {
     return (
-      <ContainerCenter isContainer>
-        <FlatList
-          data={genresWithKeys}
-          keyExtractor={item => item.genreKey}
-          renderItem={({item}: {item: GenresWithKeysType}) => {
-            return (
-              <MovieGenreList genre={item.genreKey} movies={item.movies} />
-            );
-          }}
-        />
+      <ContainerCenter alignItemsCenter isVerticalCenter>
+        <ActivityIndicator size="large" />
+        <DefaultText>Loading movies...</DefaultText>
       </ContainerCenter>
     );
-  };
+  }
+
+  if (isFailed && errorMessage !== null) {
+    return (
+      <ContainerCenter alignItemsCenter isVerticalCenter>
+        <DefaultText>Sorry, error occurred:</DefaultText>
+        <DefaultText>{errorMessage}</DefaultText>
+      </ContainerCenter>
+    );
+  }
+
+  return (
+    <ContainerCenter isContainer>
+      <FlatList
+        data={movies}
+        keyExtractor={item => item.genreKey}
+        renderItem={({item}: {item: GenresWithKeysType}) => {
+          return <MovieGenreList genre={item.genreKey} movies={item.movies} />;
+        }}
+      />
+    </ContainerCenter>
+  );
+};
 
 export default FilmGenresScreen;

@@ -1,12 +1,6 @@
 import {combineReducers} from 'redux';
+import movies from 'screens/FilmGenresScreen/redux/reducer';
 
-const reducer = (state = [], action) => {
-  switch (action.type) {
-    case 'value':
-      return state;
+export const rootReducer = combineReducers({movies});
 
-    default:
-      return state;
-  }
-};
-export const rootReducer = combineReducers({reducer});
+export type RootState = ReturnType<typeof rootReducer>;

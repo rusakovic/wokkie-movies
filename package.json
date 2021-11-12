@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "ENVFILE=.env react-native run-android",
+    "ios": "ENVFILE=.env react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
@@ -16,8 +16,10 @@
     "@react-navigation/native-stack": "^6.2.5",
     "@react-navigation/stack": "^6.0.11",
     "@types/lodash": "^4.14.176",
+    "axios": "^0.24.0",
     "react": "17.0.2",
     "react-native": "0.66.3",
+    "react-native-config": "^1.4.5",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-responsive-fontsize": "^0.5.1",

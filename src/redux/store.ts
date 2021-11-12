@@ -4,6 +4,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {persistReducer, persistStore} from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import {rootReducer} from './reducer';
+import rootSaga from './sagas';
 
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -30,7 +31,7 @@ const store = createStore(
 );
 
 // Run the saga
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
 
