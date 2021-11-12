@@ -1,6 +1,7 @@
 import {Movie} from 'types/generalTypes';
 
 export interface MoviePreviewProps {
+  id: Movie['id'];
   posterUri: Movie['poster'];
   title: Movie['title'];
   backdrop: Movie['backdrop'];

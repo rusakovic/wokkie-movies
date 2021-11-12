@@ -1,6 +1,7 @@
 import {Movie} from 'types/generalTypes';
 
 export interface FilmDetailsRouteProps {
+  id: Movie['id'];
   backdrop: Movie['backdrop'];
   poster: Movie['poster'];
   title: Movie['title'];

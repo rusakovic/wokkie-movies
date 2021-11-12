@@ -120,6 +120,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
             keyExtractor={movie => movie.id}
             renderItem={({
               item: {
+                id,
                 poster,
                 backdrop,
                 cast,
@@ -133,6 +134,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
             }) => (
               <View style={styles.moviePreviewWrapper}>
                 <MovieSearchPreview
+                  id={id}
                   title={title}
                   overview={overview}
                   year={released_on}
@@ -143,7 +145,6 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
                   director={director}
                   length={length}
                   isFavorite={false}
-                  isHidden={false}
                 />
               </View>
             )}

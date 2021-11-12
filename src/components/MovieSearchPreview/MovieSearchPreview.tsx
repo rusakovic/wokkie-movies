@@ -4,9 +4,8 @@ import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import {MoviePreviewProps} from 'components/MoviePreview/types';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import React, {useState} from 'react';
-import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
+import {Image, Modal, Pressable, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useDispatch} from 'react-redux';
 import {RootStackParamList, Routes} from 'routes/routes';
 import {yearExtractor} from 'utils/date/yearExtractor';
@@ -14,10 +13,10 @@ import {styles} from './styles';
 
 interface MovieSearchPreview extends MoviePreviewProps {
   isFavorite: boolean;
-  isHidden: boolean;
 }
 
 const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
+  id,
   posterUri,
   backdrop,
   cast,
@@ -28,7 +27,6 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
   title,
   year,
   isFavorite,
-  isHidden,
 }) => {
   const dispatch = useDispatch();
 
@@ -57,6 +55,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
       rating,
       title,
       year,
+      id,
     });
   };
 

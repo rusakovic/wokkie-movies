@@ -9,11 +9,11 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {RootStackParamList, Routes} from 'routes/routes';
-import {Movie} from 'types/generalTypes';
 import {MoviePreviewStyles} from './styles';
 import {MoviePreviewProps} from './types';
 
 const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({
+  id,
   posterUri,
   backdrop,
   cast,
@@ -31,6 +31,7 @@ const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({
 
   const onNavigationHandler = () => {
     navigate(Routes.FilmDetailsScreen, {
+      id,
       backdrop,
       cast,
       director,

@@ -10,6 +10,8 @@ import styled from 'constants/styled';
 import {FlatList} from 'react-native-gesture-handler';
 import ContainerCenter from 'components/Containers/ContainerCenter';
 import {MoviePreview} from 'components';
+import {useSelector} from 'react-redux';
+
 interface MovieGenreListProps {
   genre: Movie['genres'][0];
   movies: Movie[];
@@ -40,6 +42,7 @@ const MovieGenreList: React.FunctionComponent<MovieGenreListProps> = ({
           horizontal
           renderItem={({
             item: {
+              id,
               poster,
               backdrop,
               cast,
@@ -53,6 +56,7 @@ const MovieGenreList: React.FunctionComponent<MovieGenreListProps> = ({
           }) => {
             return (
               <MoviePreview
+                id={id}
                 posterUri={poster}
                 title={title}
                 backdrop={backdrop}

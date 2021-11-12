@@ -3,19 +3,17 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import styled from 'constants/styled';
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
-import {Routes} from 'routes/routes';
-import {styles} from './styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {FilmDetailsScreen, FilmGenresScreen, SearchFilmScreen} from 'screens';
-import SearchScreen from 'screens/SearchScreen';
 
-interface NavigatorProps {}
+import {Routes} from 'routes/routes';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {FilmDetailsScreen, FilmGenresScreen} from 'screens';
+import SearchScreen from 'screens/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 const StackNavigator = createNativeStackNavigator();
 
-const Navigator: React.FunctionComponent<NavigatorProps> = props => {
+const Navigator: React.FunctionComponent = () => {
   const AppTheme = {
     ...DefaultTheme,
     colors: {

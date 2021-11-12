@@ -12,12 +12,19 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {useDispatch, useSelector} from 'react-redux';
+import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actions';
+import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
 import {yearExtractor} from 'utils/date/yearExtractor';
 import {FilmDetailsRouteProps} from './types';
 
 const FilmDetailsScreen: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
+
+  const hiddenMoviesIds = useSelector(hiddenMoviesSelector);
   const {
     params: {
+      id,
       backdrop,
       cast,
       director,
@@ -32,6 +39,11 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
 
   const directorsList = isArray(director) ? director.join(', ') : director;
   const formattedYear = yearExtractor(year);
+
+  const onHiddenToggle = () => {
+    dispatch(hiddenMovieToggleRequested(id));
+  };
+
   return (
     <ContainerCenter style={{height: hp(100)}}>
       {/* BACKDROP COVER */}
@@ -122,8 +134,12 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                 }}>
                 <ButtonWithShadowSmall
                   isIcon
-                  iconName={false ? 'md-eye-off-outline' : 'eye-outline'}
-                  onPress={null}
+                  iconName={
+                    hiddenMoviesIds.includes(id)
+                      ? 'md-eye-off-outline'
+                      : 'eye-outline'
+                  }
+                  onPress={onHiddenToggle}
                   isDisabled={false}
                   iconSize={20}
                   percentageWidth={40}
