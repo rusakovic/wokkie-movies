@@ -64,6 +64,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
 
   const onClearSearchInputHandler = () => {
     setSearchText('');
+    dispatch(searchMovieRequested(searchText));
   };
 
   const hideMoviesGlobalHandler = () => {

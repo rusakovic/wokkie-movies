@@ -10,7 +10,7 @@ export function* SearchMovieResultRequestedSaga({
   searchInput,
 }: SearchMovieRequestedAction): Generator {
   try {
-    const fetchUrl = `${DEFAULT_API_URL}?=${searchInput}`;
+    const fetchUrl = `${DEFAULT_API_URL}?q=${searchInput}`;
     const response = (yield call(axios.get, fetchUrl, {
       headers: {
         Authorization: `Bearer ${Config.MOVIE_DB_API_KEY}`,

@@ -1,3 +1,5 @@
+import {useNavigation} from '@react-navigation/core';
+import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import {MoviePreviewProps} from 'components/MoviePreview/types';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
@@ -6,36 +8,9 @@ import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useDispatch} from 'react-redux';
+import {RootStackParamList, Routes} from 'routes/routes';
 import {yearExtractor} from 'utils/date/yearExtractor';
-
-const styles = StyleSheet.create({
-  mainWrapper: {flexDirection: 'row', flex: 1},
-  posterWrapper: {
-    width: '30%',
-  },
-  poster: {
-    height: '100%',
-  },
-  descriptionWrapper: {
-    width: '70%',
-    paddingHorizontal: wp(3),
-  },
-  titleWrapper: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  buttonsWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: wp(3),
-    height: '25%',
-  },
-  containerSpace: {
-    width: '3%',
-  },
-});
+import {styles} from './styles';
 
 interface MovieSearchPreview extends MoviePreviewProps {
   isFavorite: boolean;
@@ -66,6 +41,25 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
     // dispatch(hiddenMovieToggleRequested(id));
   };
 
+  const {navigate} =
+    useNavigation<
+      StackNavigationProp<RootStackParamList, Routes.FilmDetailsScreen>
+    >();
+
+  const onNavigationHandler = () => {
+    navigate(Routes.FilmDetailsScreen, {
+      backdrop,
+      cast,
+      director,
+      poster: posterUri,
+      length,
+      overview,
+      rating,
+      title,
+      year,
+    });
+  };
+
   const showPreviewPosterToggle = () => {
     setIsPreviewOpened(prevState => !prevState);
   };
@@ -85,10 +79,9 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
 
         <Modal visible={isPreviewOpened} transparent={true}>
           <ImageViewer
-            imageUrls={[{url: ''}]}
+            imageUrls={[{url: backdrop}, {url: posterUri}]}
             onCancel={showPreviewPosterToggle}
             enableSwipeDown
-            renderIndicator={() => <></>}
             backgroundColor="rgba(0,0,0,0.8)"
             saveToLocalByLongPress={false}
             onClick={showPreviewPosterToggle}
@@ -99,7 +92,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
       </View>
 
       <View style={styles.descriptionWrapper}>
-        <Pressable onPress={showPreviewPosterToggle}>
+        <Pressable onPress={onNavigationHandler}>
           <View style={styles.titleWrapper}>
             <DefaultText
               style={{width: '80%'}}
