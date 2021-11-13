@@ -1,3 +1,4 @@
+import {NoInternetNotifier} from 'components';
 import React from 'react';
 
 import {Provider} from 'react-redux';
@@ -10,6 +11,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Navigator />
+        <NoInternetNotifier />
       </PersistGate>
     </Provider>
   );

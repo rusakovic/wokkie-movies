@@ -17,7 +17,7 @@ import omit from 'lodash/omit';
 import styled from '@constants/styled';
 
 import {styles} from './styles';
-import {MoviePreview, MovieSearchPreview} from 'components';
+import {MovieSearchPreview} from 'components';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import ContainerSpace from 'components/Containers/ContainerSpace';
 import HorizontalDivider from 'components/Dividers/Horizontal/HorizontalDivider';

@@ -31,54 +31,52 @@ const Navigator: React.FunctionComponent = () => {
           options={({route}) => ({
             headerTitle: getHeaderTitle(route),
           })}>
-          {() => {
-            return (
-              <Tab.Navigator>
-                <Tab.Screen
-                  name={Routes.FilmGenresScreen}
-                  component={FilmGenresScreen}
-                  options={{
-                    tabBarIcon: ({focused}) => (
-                      <Ionicons
-                        name="ios-film-outline"
-                        color={
-                          focused
-                            ? styled.colors.grey70opacity
-                            : styled.colors.grey40opacity
-                        }
-                        size={24}
-                      />
-                    ),
-                    tabBarLabel: 'MOVIES',
-                    headerShown: false,
-                    tabBarActiveTintColor: styled.colors.grey70opacity,
-                    tabBarInactiveTintColor: styled.colors.grey40opacity,
-                  }}
-                />
-                <Tab.Screen
-                  name={Routes.SearchFilmScreen}
-                  component={SearchScreen}
-                  options={{
-                    tabBarIcon: ({focused}) => (
-                      <Ionicons
-                        name="ios-search-outline"
-                        color={
-                          focused
-                            ? styled.colors.grey70opacity
-                            : styled.colors.grey40opacity
-                        }
-                        size={24}
-                      />
-                    ),
-                    tabBarLabel: 'SEARCH',
-                    headerShown: false,
-                    tabBarActiveTintColor: styled.colors.grey70opacity,
-                    tabBarInactiveTintColor: styled.colors.grey40opacity,
-                  }}
-                />
-              </Tab.Navigator>
-            );
-          }}
+          {() => (
+            <Tab.Navigator>
+              <Tab.Screen
+                name={Routes.FilmGenresScreen}
+                component={FilmGenresScreen}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <Ionicons
+                      name="ios-film-outline"
+                      color={
+                        focused
+                          ? styled.colors.grey70opacity
+                          : styled.colors.grey40opacity
+                      }
+                      size={24}
+                    />
+                  ),
+                  tabBarLabel: 'MOVIES',
+                  headerShown: false,
+                  tabBarActiveTintColor: styled.colors.grey70opacity,
+                  tabBarInactiveTintColor: styled.colors.grey40opacity,
+                }}
+              />
+              <Tab.Screen
+                name={Routes.SearchFilmScreen}
+                component={SearchScreen}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <Ionicons
+                      name="ios-search-outline"
+                      color={
+                        focused
+                          ? styled.colors.grey70opacity
+                          : styled.colors.grey40opacity
+                      }
+                      size={24}
+                    />
+                  ),
+                  tabBarLabel: 'SEARCH',
+                  headerShown: false,
+                  tabBarActiveTintColor: styled.colors.grey70opacity,
+                  tabBarInactiveTintColor: styled.colors.grey40opacity,
+                }}
+              />
+            </Tab.Navigator>
+          )}
         </StackNavigator.Screen>
         <StackNavigator.Screen
           name={Routes.FilmDetailsScreen}
