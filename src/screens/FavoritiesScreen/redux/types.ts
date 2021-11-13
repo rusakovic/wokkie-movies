@@ -17,6 +17,7 @@ export type FavoriteMoviesInitialStateType = {
 // FAVORITE MOVIE TOGGLE
 export type FavoriteMovieToggleRequestedAction = {
   type: ActionType.FavoriteMovieToggleRequested;
+  movie: Movie;
   id: Movie['id'];
 };
 

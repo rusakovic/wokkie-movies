@@ -13,8 +13,11 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
+import {favoriteMovieToggleRequested} from 'screens/FavoritiesScreen/redux/actions';
+import {favoriteMoviesSelector} from 'screens/FavoritiesScreen/redux/selectors';
 import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actions';
 import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
+import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
 import {yearExtractor} from 'utils/date/yearExtractor';
 import {FilmDetailsRouteProps} from './types';
 
@@ -23,25 +26,35 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
 
   const hiddenMoviesIds = useSelector(hiddenMoviesSelector);
   const {
-    params: {
-      id,
-      backdrop,
-      cast,
-      director,
-      poster,
-      length,
-      overview,
-      rating,
-      title,
-      year,
-    },
+    params: {movie},
   } = useRoute<RouteProp<Record<string, FilmDetailsRouteProps>, string>>();
 
+  const {
+    id,
+    backdrop,
+    cast,
+    director,
+    poster,
+    length,
+    overview,
+    imdb_rating,
+    title,
+    released_on,
+  } = movie;
+
   const directorsList = isArray(director) ? director.join(', ') : director;
-  const formattedYear = yearExtractor(year);
+  const formattedYear = yearExtractor(released_on);
 
   const onHiddenToggle = () => {
     dispatch(hiddenMovieToggleRequested(id));
+  };
+
+  const favoriteMovies = useSelector(favoriteMoviesSelector);
+  const favoriteMoviesIds = Object.keys(favoriteMovies);
+  const isFavorite = isMoviesIdInArray(favoriteMoviesIds, id);
+
+  const onFavoriteToggle = () => {
+    dispatch(favoriteMovieToggleRequested(movie, id));
   };
 
   return (
@@ -117,7 +130,7 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                     xl
                     fontColor={styled.colors.white.white}
                     isTextAlignCenter>
-                    {rating}
+                    {imdb_rating}
                   </DefaultText>
                 </View>
               </ContainerCenter>
@@ -146,9 +159,13 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                 />
                 <ButtonWithShadowSmall
                   isIcon
-                  iconColor={styled.colors.yellow.star}
-                  iconName={true ? 'star' : 'star-outline'}
-                  onPress={() => {}}
+                  iconColor={
+                    isFavorite
+                      ? styled.colors.yellow.star
+                      : styled.colors.grey30opacity
+                  }
+                  iconName={isFavorite ? 'star' : 'star-outline'}
+                  onPress={onFavoriteToggle}
                   isDisabled={false}
                   iconSize={20}
                   percentageWidth={40}

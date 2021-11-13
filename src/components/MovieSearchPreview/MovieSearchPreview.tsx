@@ -12,33 +12,28 @@ import {RootStackParamList, Routes} from 'routes/routes';
 import {favoriteMovieToggleRequested} from 'screens/FavoritiesScreen/redux/actions';
 import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actions';
 import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
+import {Movie} from 'types/generalTypes';
 import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
 import {yearExtractor} from 'utils/date/yearExtractor';
 import {styles} from './styles';
 
-interface MovieSearchPreview extends MoviePreviewProps {
+interface MovieSearchPreview {
+  movie: Movie;
   isFavorite: boolean;
 }
 
 const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
-  id,
-  posterUri,
-  backdrop,
-  cast,
-  director,
-  length,
-  overview,
-  rating,
-  title,
-  year,
+  movie,
   isFavorite,
 }) => {
+  const {backdrop, poster, overview, imdb_rating, title, released_on, id} =
+    movie;
   const dispatch = useDispatch();
   const hiddenMoviesIds = useSelector(hiddenMoviesSelector);
 
   const [isPreviewOpened, setIsPreviewOpened] = useState(false);
   const onFavoriteToggle = () => {
-    dispatch(favoriteMovieToggleRequested(id));
+    dispatch(favoriteMovieToggleRequested(movie, id));
   };
 
   const onHiddenToggle = () => {
@@ -52,30 +47,21 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
 
   const onNavigationHandler = () => {
     navigate(Routes.FilmDetailsScreen, {
-      backdrop,
-      cast,
-      director,
-      poster: posterUri,
-      length,
-      overview,
-      rating,
-      title,
-      year,
-      id,
+      movie,
     });
   };
 
   const showPreviewPosterToggle = () => {
     setIsPreviewOpened(prevState => !prevState);
   };
-  const formattedYear = yearExtractor(year);
+  const formattedYear = yearExtractor(released_on);
   return (
     <View style={styles.mainWrapper}>
       <View style={styles.posterWrapper}>
         <Pressable onPress={showPreviewPosterToggle}>
           <Image
             source={{
-              uri: posterUri,
+              uri: poster,
             }}
             style={styles.poster}
             resizeMode="contain"
@@ -84,7 +70,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
 
         <Modal visible={isPreviewOpened} transparent={true}>
           <ImageViewer
-            imageUrls={[{url: backdrop}, {url: posterUri}]}
+            imageUrls={[{url: backdrop}, {url: poster}]}
             onCancel={showPreviewPosterToggle}
             enableSwipeDown
             backgroundColor="rgba(0,0,0,0.8)"
@@ -107,7 +93,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
               {title}
             </DefaultText>
             <DefaultText style={{width: '20%'}} isTextAlignCenter s>
-              {rating}
+              {imdb_rating}
             </DefaultText>
           </View>
 

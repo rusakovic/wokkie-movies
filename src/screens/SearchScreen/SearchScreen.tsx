@@ -38,13 +38,8 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   const {data, errorMessage, isFailed, isLoading} = useSelector(
     searchMovieResultSelector,
   );
-  console.log('🚀 ~ file: SearchScreen.tsx ~ line 37 ~ data', data);
 
   const searchedMoviesWithIds = keyBy(data, 'id');
-  console.log(
-    '🚀 ~ file: SearchScreen.tsx ~ line 43 ~ searchedMoviesWithIds',
-    searchedMoviesWithIds,
-  );
 
   const favoriteMovies = useSelector(favoriteMoviesSelector);
   const favoriteMoviesIds = Object.keys(favoriteMovies);
@@ -53,10 +48,6 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   const removeFavoritesFromSearchResult = omit(
     searchedMoviesWithIds,
     favoriteMoviesIds,
-  );
-  console.log(
-    '🚀 ~ file: SearchScreen.tsx ~ line 57 ~ removeFavoritesFromSearchResult',
-    removeFavoritesFromSearchResult,
   );
 
   // Show favorite movies first, then search result
@@ -98,7 +89,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   };
 
   // Empty search result text
-  const isSearchResult = data && data.length;
+  const isSearchResult = pushedFavoriteMoviesArray.length;
   const emptySearchResultText = searchText.length
     ? 'Movies not found'
     : 'No added movies to favorites';
@@ -137,40 +128,18 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
       </View>
       <HorizontalDivider marginVertical={5} />
       <SafeAreaView style={styles.searchResultContainer}>
-        {isSearchResult && data ? (
+        {isSearchResult ? (
           <FlatList<Movie>
             data={pushedFavoriteMoviesArray}
             ref={flatListRef}
             scrollEnabled={isScrollable}
             keyboardShouldPersistTaps="handled"
             keyExtractor={movie => movie.id}
-            renderItem={({
-              item: {
-                id,
-                poster,
-                backdrop,
-                cast,
-                director,
-                length,
-                overview,
-                imdb_rating,
-                title,
-                released_on,
-              },
-            }) => (
+            renderItem={({item}) => (
               <View style={styles.moviePreviewWrapper}>
                 <MovieSearchPreview
-                  id={id}
-                  title={title}
-                  overview={overview}
-                  year={released_on}
-                  rating={imdb_rating}
-                  posterUri={poster}
-                  backdrop={backdrop}
-                  cast={cast}
-                  director={director}
-                  length={length}
-                  isFavorite={isMoviesIdInArray(favoriteMoviesIds, id)}
+                  movie={item}
+                  isFavorite={isMoviesIdInArray(favoriteMoviesIds, item.id)}
                 />
               </View>
             )}

@@ -11,13 +11,10 @@ import {
 import {Movie} from 'types/generalTypes';
 
 export function* FavoriteMovieToggleSaga({
+  movie,
   id,
 }: FavoriteMovieToggleRequestedAction): Generator {
-  const moviesData = (yield select(
-    searchMovieResultDataResultsSelector,
-  )) as Movie[];
-  const favoriteMovieData = moviesData.filter(movie => movie.id === id)[0];
-  yield put(favoriteMovieToggleSucceeded(favoriteMovieData, id));
+  yield put(favoriteMovieToggleSucceeded(movie, id));
 }
 
 export function* FavoritesFlowSaga(action: Action): Generator {

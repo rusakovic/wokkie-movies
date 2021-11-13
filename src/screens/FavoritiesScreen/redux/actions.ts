@@ -3,9 +3,11 @@ import {FavoriteMovieToggleRequestedAction, ActionType, Action} from './types';
 
 // FAVORITE MOVIE TOGGLE
 export const favoriteMovieToggleRequested = (
+  movie: Movie,
   id: FavoriteMovieToggleRequestedAction['id'],
 ): Action => ({
   type: ActionType.FavoriteMovieToggleRequested,
+  movie,
   id,
 });
 

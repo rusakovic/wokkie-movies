@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import ContainerCenter from 'components/Containers/ContainerCenter';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import React from 'react';
-import {Image, Pressable, View} from 'react-native';
+import {Image, Pressable} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -12,18 +12,8 @@ import {RootStackParamList, Routes} from 'routes/routes';
 import {MoviePreviewStyles} from './styles';
 import {MoviePreviewProps} from './types';
 
-const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({
-  id,
-  posterUri,
-  backdrop,
-  cast,
-  director,
-  length,
-  overview,
-  rating,
-  title,
-  year,
-}) => {
+const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({movie}) => {
+  const {poster, title} = movie;
   const {navigate} =
     useNavigation<
       StackNavigationProp<RootStackParamList, Routes.FilmDetailsScreen>
@@ -31,16 +21,7 @@ const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({
 
   const onNavigationHandler = () => {
     navigate(Routes.FilmDetailsScreen, {
-      id,
-      backdrop,
-      cast,
-      director,
-      poster: posterUri,
-      length,
-      overview,
-      rating,
-      title,
-      year,
+      movie,
     });
   };
 
@@ -56,7 +37,7 @@ const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({
         }}>
         <Image
           source={{
-            uri: posterUri,
+            uri: poster,
           }}
           resizeMode="cover"
           style={MoviePreviewStyles.poster}

@@ -40,34 +40,8 @@ const MovieGenreList: React.FunctionComponent<MovieGenreListProps> = ({
           data={movies}
           keyExtractor={item => item.id}
           horizontal
-          renderItem={({
-            item: {
-              id,
-              poster,
-              backdrop,
-              cast,
-              director,
-              length,
-              overview,
-              imdb_rating,
-              title,
-              released_on,
-            },
-          }) => {
-            return (
-              <MoviePreview
-                id={id}
-                posterUri={poster}
-                title={title}
-                backdrop={backdrop}
-                cast={cast}
-                director={director}
-                length={length}
-                overview={overview}
-                rating={imdb_rating}
-                year={released_on}
-              />
-            );
+          renderItem={({item}) => {
+            return <MoviePreview movie={item} />;
           }}
         />
       </ContainerCenter>
