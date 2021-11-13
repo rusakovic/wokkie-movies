@@ -3,11 +3,13 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import {MoviePreviewProps} from 'components/MoviePreview/types';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
+import styled from 'constants/styled';
 import React, {useState} from 'react';
 import {Image, Modal, Pressable, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStackParamList, Routes} from 'routes/routes';
+import {favoriteMovieToggleRequested} from 'screens/FavoritiesScreen/redux/actions';
 import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actions';
 import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
 import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
@@ -36,7 +38,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
 
   const [isPreviewOpened, setIsPreviewOpened] = useState(false);
   const onFavoriteToggle = () => {
-    // dispatch(favoriteMovieToggleRequested(id));
+    dispatch(favoriteMovieToggleRequested(id));
   };
 
   const onHiddenToggle = () => {
@@ -133,6 +135,11 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
           <ButtonWithShadowSmall
             isIcon
             iconName={isFavorite ? 'star' : 'star-outline'}
+            iconColor={
+              isFavorite
+                ? styled.colors.yellow.star
+                : styled.colors.grey30opacity
+            }
             onPress={onFavoriteToggle}
             isDisabled={false}
             iconSize={15}

@@ -23,6 +23,9 @@ import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import ContainerSpace from 'components/Containers/ContainerSpace';
 import HorizontalDivider from 'components/Dividers/Horizontal/HorizontalDivider';
 import {Movie} from 'types/generalTypes';
+import {favoriteMoviesSelector} from 'screens/FavoritiesScreen/redux/selectors';
+import {keyBy} from 'lodash';
+import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
 
 interface SearchScreenProps {
   isScrollable: boolean;
@@ -37,7 +40,30 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   );
   console.log('🚀 ~ file: SearchScreen.tsx ~ line 37 ~ data', data);
 
-  const withoutHiddenMovies = [];
+  const searchedMoviesWithIds = keyBy(data, 'id');
+  console.log(
+    '🚀 ~ file: SearchScreen.tsx ~ line 43 ~ searchedMoviesWithIds',
+    searchedMoviesWithIds,
+  );
+
+  const favoriteMovies = useSelector(favoriteMoviesSelector);
+  const favoriteMoviesIds = Object.keys(favoriteMovies);
+
+  // Avoid duplicates in search result and favorites list
+  const removeFavoritesFromSearchResult = omit(
+    searchedMoviesWithIds,
+    favoriteMoviesIds,
+  );
+  console.log(
+    '🚀 ~ file: SearchScreen.tsx ~ line 57 ~ removeFavoritesFromSearchResult',
+    removeFavoritesFromSearchResult,
+  );
+
+  // Show favorite movies first, then search result
+  const pushedFavoriteMoviesArray = [
+    ...Object.values(favoriteMovies),
+    ...Object.values(removeFavoritesFromSearchResult),
+  ];
 
   const [searchText, setSearchText] = useState('');
 
@@ -113,7 +139,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
       <SafeAreaView style={styles.searchResultContainer}>
         {isSearchResult && data ? (
           <FlatList<Movie>
-            data={data}
+            data={pushedFavoriteMoviesArray}
             ref={flatListRef}
             scrollEnabled={isScrollable}
             keyboardShouldPersistTaps="handled"
@@ -144,7 +170,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
                   cast={cast}
                   director={director}
                   length={length}
-                  isFavorite={false}
+                  isFavorite={isMoviesIdInArray(favoriteMoviesIds, id)}
                 />
               </View>
             )}
