@@ -19,6 +19,7 @@ import {hiddenMovieToggleRequested} from 'screens/HiddenMoviesScreen/redux/actio
 import {hiddenMoviesSelector} from 'screens/HiddenMoviesScreen/redux/selectors';
 import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
 import {yearExtractor} from 'utils/date/yearExtractor';
+import {FilmDetailsScreenStyles} from './styles';
 import {FilmDetailsRouteProps} from './types';
 
 const FilmDetailsScreen: React.FunctionComponent = () => {
@@ -53,71 +54,52 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
   const favoriteMoviesIds = Object.keys(favoriteMovies);
   const isFavorite = isMoviesIdInArray(favoriteMoviesIds, id);
 
+  const isHidden = isMoviesIdInArray(hiddenMoviesIds, id);
+
   const onFavoriteToggle = () => {
     dispatch(favoriteMovieToggleRequested(movie, id));
   };
 
   return (
-    <ContainerCenter style={{height: hp(100)}}>
+    <ContainerCenter style={FilmDetailsScreenStyles.mainWrapper}>
       {/* BACKDROP COVER */}
-      <ContainerCenter style={{height: hp(30)}} isFullWidth>
+      <ContainerCenter
+        style={FilmDetailsScreenStyles.backdropWrapper}
+        isFullWidth>
         <ContainerCenter isFullWidth>
           <Image
             source={{uri: backdrop}}
-            style={{height: '100%', width: '100%'}}
+            style={FilmDetailsScreenStyles.backdropImage}
             resizeMode="cover"
           />
         </ContainerCenter>
-        <View
-          style={{
-            height: '25%',
-            backgroundColor: styled.colors.black,
-            position: 'absolute',
-            width: '100%',
-            bottom: 0,
-            opacity: 0.5,
-          }}
-        />
+        <View style={FilmDetailsScreenStyles.backdropInnerShadow} />
       </ContainerCenter>
-      <View
-        style={{
-          flex: 1,
-          height: '100%',
-          top: -hp(11),
-        }}>
+      <View style={FilmDetailsScreenStyles.movieDetailsWrapper}>
         {/* MOVIE DETAILS */}
-        <ContainerCenter
-          style={{
-            height: '30%',
-            alignItems: 'center',
-          }}>
+        <ContainerCenter style={FilmDetailsScreenStyles.mainPosterWrapper}>
           <ContainerCenter
-            style={{
-              width: '90%',
-            }}
+            style={FilmDetailsScreenStyles.posterButtonsWrapper}
             flexDirectionRow>
-            <ContainerCenter isFullWidth style={{height: '100%', width: '30%'}}>
+            {/* POSTER */}
+            <ContainerCenter
+              isFullWidth
+              style={FilmDetailsScreenStyles.posterWrapper}>
               <Image
                 source={{uri: poster}}
-                style={{height: '100%', width: '100%'}}
+                style={FilmDetailsScreenStyles.poster}
                 resizeMode="contain"
               />
             </ContainerCenter>
+
             <ContainerCenter
-              style={{
-                alignItems: 'flex-end',
-                justifyContent: 'space-between',
-                width: '70%',
-              }}>
+              style={FilmDetailsScreenStyles.titleButtonsWrapper}>
               {/* TITLE AND RATING */}
               <ContainerCenter
                 flexDirectionRow
                 justifyContentSpaceBetween
-                style={{
-                  marginTop: '15%',
-                  alignItems: 'center',
-                }}>
-                <View style={{width: '75%'}}>
+                style={FilmDetailsScreenStyles.titleRatingWrapper}>
+                <View style={FilmDetailsScreenStyles.title}>
                   <DefaultText
                     s
                     fontColor={styled.colors.white.white}
@@ -125,7 +107,7 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                     {title}
                   </DefaultText>
                 </View>
-                <View style={{width: '20%'}}>
+                <View style={FilmDetailsScreenStyles.rating}>
                   <DefaultText
                     xl
                     fontColor={styled.colors.white.white}
@@ -135,23 +117,11 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                 </View>
               </ContainerCenter>
 
-              {/* FAVORITE AND HIDE */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: '30%',
-                  width: '40%',
-                  justifyContent: 'space-between',
-
-                  padding: 2,
-                }}>
+              {/* FAVORITE AND HIDE BUTTONS */}
+              <View style={FilmDetailsScreenStyles.favoriteHideButtonsWrapper}>
                 <ButtonWithShadowSmall
                   isIcon
-                  iconName={
-                    hiddenMoviesIds.includes(id)
-                      ? 'md-eye-off-outline'
-                      : 'eye-outline'
-                  }
+                  iconName={isHidden ? 'md-eye-off-outline' : 'eye-outline'}
                   onPress={onHiddenToggle}
                   isDisabled={false}
                   iconSize={20}
@@ -175,7 +145,6 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
           </ContainerCenter>
 
           {/* YEAR, LENGTH, DIRECTOR  */}
-
           <ContainerCenter isFullWidth isContainer isMarginVertical1>
             <ContainerCenter flexDirectionRow>
               <DefaultText xs>{formattedYear} | </DefaultText>
@@ -185,13 +154,13 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
           </ContainerCenter>
         </ContainerCenter>
         <ContainerSpace mtXS />
-        <ScrollView
-          style={{
-            marginHorizontal: wp(4),
-            marginVertical: wp(10),
-          }}>
+
+        {/* CAST AND DESCRIPTION */}
+        <ScrollView style={FilmDetailsScreenStyles.castDescriptionScroll}>
           {/* CAST */}
-          <ContainerCenter isMarginVertical2 style={{width: '90%'}}>
+          <ContainerCenter
+            isMarginVertical2
+            style={FilmDetailsScreenStyles.cast}>
             <DefaultText s uppercased fontFamilyBold>
               cast:{' '}
             </DefaultText>
