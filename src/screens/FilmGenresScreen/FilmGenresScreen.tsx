@@ -1,4 +1,4 @@
-import {MovieGenreList} from 'components';
+import {ErrorContainer, LoadingContainer, MovieGenreList} from 'components';
 import ContainerCenter from 'components/Containers/ContainerCenter';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import React, {useEffect} from 'react';
@@ -21,21 +21,11 @@ const FilmGenresScreen: React.FunctionComponent = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <ContainerCenter alignItemsCenter isVerticalCenter>
-        <ActivityIndicator size="large" />
-        <DefaultText>Loading movies...</DefaultText>
-      </ContainerCenter>
-    );
+    return <LoadingContainer />;
   }
 
   if (isFailed && errorMessage !== null) {
-    return (
-      <ContainerCenter alignItemsCenter isVerticalCenter>
-        <DefaultText>Sorry, error occurred:</DefaultText>
-        <DefaultText>{errorMessage}</DefaultText>
-      </ContainerCenter>
-    );
+    return <ErrorContainer errorMessage={errorMessage} />;
   }
 
   return (

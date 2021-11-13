@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Pressable,
   SafeAreaView,
@@ -17,7 +18,7 @@ import omit from 'lodash/omit';
 import styled from '@constants/styled';
 
 import {styles} from './styles';
-import {MovieSearchPreview} from 'components';
+import {ErrorContainer, MovieSearchPreview} from 'components';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
 import ContainerSpace from 'components/Containers/ContainerSpace';
 import HorizontalDivider from 'components/Dividers/Horizontal/HorizontalDivider';
@@ -108,6 +109,10 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
     ? 'Movies not found'
     : 'No added movies to favorites';
 
+  if (isFailed && errorMessage !== null) {
+    return <ErrorContainer errorMessage={errorMessage} />;
+  }
+
   return (
     <View style={styles.mainContainer}>
       {/* SEARCH INPUT */}
@@ -119,7 +124,9 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
             style={styles.searchField}
             onChangeText={setSearchText}
           />
-          {isSearchTextFilled ? (
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : isSearchTextFilled ? (
             <Pressable
               style={styles.crossButtonWrapper}
               onPress={onClearSearchInputHandler}>
