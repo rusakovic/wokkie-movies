@@ -26,6 +26,11 @@ import {Movie} from 'types/generalTypes';
 import {favoriteMoviesSelector} from 'screens/FavoritiesScreen/redux/selectors';
 import {keyBy} from 'lodash';
 import {isMoviesIdInArray} from 'utils/arrays/isMovieIdInArray';
+import {hiddenMovieToggleGlobal} from 'screens/HiddenMoviesScreen/redux/actions';
+import {
+  hiddenMoviesSelector,
+  isHiddenMoviesGlobalSelector,
+} from 'screens/HiddenMoviesScreen/redux/selectors';
 
 interface SearchScreenProps {
   isScrollable: boolean;
@@ -38,6 +43,8 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   const {data, errorMessage, isFailed, isLoading} = useSelector(
     searchMovieResultSelector,
   );
+  const isHiddenMoviesGlobal = useSelector(isHiddenMoviesGlobalSelector);
+  const hiddenMoviesIds = useSelector(hiddenMoviesSelector);
 
   const searchedMoviesWithIds = keyBy(data, 'id');
 
@@ -55,6 +62,14 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
     ...Object.values(favoriteMovies),
     ...Object.values(removeFavoritesFromSearchResult),
   ];
+
+  const filterHiddenMovies = pushedFavoriteMoviesArray.filter(
+    movie => movie && !isMoviesIdInArray(hiddenMoviesIds, movie.id),
+  );
+
+  const withoutHiddenMovies = isHiddenMoviesGlobal
+    ? filterHiddenMovies
+    : pushedFavoriteMoviesArray;
 
   const [searchText, setSearchText] = useState('');
 
@@ -85,7 +100,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
   };
 
   const hideMoviesGlobalHandler = () => {
-    // dispatch(hiddenMovieToggleGlobal());
+    dispatch(hiddenMovieToggleGlobal());
   };
 
   // Empty search result text
@@ -120,7 +135,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
         </View>
         <ButtonWithShadowSmall
           isIcon
-          iconName={true ? 'md-eye-off-outline' : 'eye-outline'}
+          iconName={isHiddenMoviesGlobal ? 'md-eye-off-outline' : 'eye-outline'}
           onPress={hideMoviesGlobalHandler}
           isDisabled={false}
           percentageWidth={15}
@@ -130,7 +145,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
       <SafeAreaView style={styles.searchResultContainer}>
         {isSearchResult ? (
           <FlatList<Movie>
-            data={pushedFavoriteMoviesArray}
+            data={withoutHiddenMovies}
             ref={flatListRef}
             scrollEnabled={isScrollable}
             keyboardShouldPersistTaps="handled"
