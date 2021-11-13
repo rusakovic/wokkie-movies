@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  ListRenderItem,
   Pressable,
   SafeAreaView,
   Text,
@@ -111,6 +110,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
 
   return (
     <View style={styles.mainContainer}>
+      {/* SEARCH INPUT */}
       <View style={styles.searchWrapper}>
         <View style={styles.searchInput}>
           <TextInput
@@ -133,6 +133,8 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
             <></>
           )}
         </View>
+
+        {/* HIDE/SHOW MOVIES */}
         <ButtonWithShadowSmall
           isIcon
           iconName={isHiddenMoviesGlobal ? 'md-eye-off-outline' : 'eye-outline'}
@@ -142,6 +144,8 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
         />
       </View>
       <HorizontalDivider marginVertical={5} />
+
+      {/* SEARCH RESULT */}
       <SafeAreaView style={styles.searchResultContainer}>
         {isSearchResult ? (
           <FlatList<Movie>

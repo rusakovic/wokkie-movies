@@ -9,6 +9,7 @@ import {Routes} from 'routes/routes';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FilmDetailsScreen, FilmGenresScreen} from 'screens';
 import SearchScreen from 'screens/SearchScreen';
+import {getHeaderTitle} from 'utils/navigation/getScreenName';
 
 const Tab = createBottomTabNavigator();
 const StackNavigator = createNativeStackNavigator();
@@ -25,7 +26,11 @@ const Navigator: React.FunctionComponent = () => {
   return (
     <NavigationContainer theme={AppTheme}>
       <StackNavigator.Navigator initialRouteName={Routes.FilmGenresScreen}>
-        <StackNavigator.Screen name={Routes.RootStack}>
+        <StackNavigator.Screen
+          name={Routes.RootStack}
+          options={({route}) => ({
+            headerTitle: getHeaderTitle(route),
+          })}>
           {() => {
             return (
               <Tab.Navigator>
