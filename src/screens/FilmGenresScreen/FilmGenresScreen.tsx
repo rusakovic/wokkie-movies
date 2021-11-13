@@ -1,10 +1,8 @@
 import {MovieGenreList} from 'components';
 import ContainerCenter from 'components/Containers/ContainerCenter';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
-import {flatten, uniq, keyBy} from 'lodash';
-import {moviesMock} from 'mock/movies';
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMovieRequested} from './redux/actions';

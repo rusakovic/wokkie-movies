@@ -1,7 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonWithShadowSmall from 'components/Buttons/ButtonWithShadowSmall';
-import {MoviePreviewProps} from 'components/MoviePreview/types';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import styled from 'constants/styled';
 import React, {useState} from 'react';
@@ -68,6 +67,7 @@ const MovieSearchPreview: React.FunctionComponent<MovieSearchPreview> = ({
           />
         </Pressable>
 
+        {/* POSTER PREVIEW */}
         <Modal visible={isPreviewOpened} transparent={true}>
           <ImageViewer
             imageUrls={[{url: backdrop}, {url: poster}]}
