@@ -1,8 +1,7 @@
 import {ErrorContainer, LoadingContainer, MovieGenreList} from 'components';
 import ContainerCenter from 'components/Containers/ContainerCenter';
-import DefaultText from 'components/Text/DefaultText/DefaultText';
+import {TestID} from 'constants/testID';
 import React, {useEffect} from 'react';
-import {ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMovieRequested} from './redux/actions';
@@ -31,6 +30,7 @@ const FilmGenresScreen: React.FunctionComponent = () => {
   return (
     <ContainerCenter isContainer>
       <FlatList
+        testID={TestID.GenresList}
         data={movies}
         keyExtractor={item => item.genreKey}
         renderItem={({item}: {item: GenresWithKeysType}) => {

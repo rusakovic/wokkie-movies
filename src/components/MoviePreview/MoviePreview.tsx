@@ -22,7 +22,7 @@ const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({movie}) => {
   };
 
   return (
-    <Pressable onPress={onNavigationHandler}>
+    <Pressable onPress={onNavigationHandler} testID={movie.id}>
       <ContainerCenter
         isVerticalCenter
         style={MoviePreviewStyles.posterWrapper}>

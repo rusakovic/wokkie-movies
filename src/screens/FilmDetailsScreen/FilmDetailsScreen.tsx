@@ -4,6 +4,7 @@ import ContainerCenter from 'components/Containers/ContainerCenter';
 import ContainerSpace from 'components/Containers/ContainerSpace';
 import DefaultText from 'components/Text/DefaultText/DefaultText';
 import styled from 'constants/styled';
+import {TestID} from 'constants/testID';
 import {isArray} from 'lodash';
 import React from 'react';
 import {Image, View} from 'react-native';
@@ -61,7 +62,9 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
   };
 
   return (
-    <ContainerCenter style={FilmDetailsScreenStyles.mainWrapper}>
+    <ContainerCenter
+      style={FilmDetailsScreenStyles.mainWrapper}
+      testID={TestID.MovieDetailsScreen}>
       {/* BACKDROP COVER */}
       <ContainerCenter
         style={FilmDetailsScreenStyles.backdropWrapper}
@@ -120,6 +123,11 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
               {/* FAVORITE AND HIDE BUTTONS */}
               <View style={FilmDetailsScreenStyles.favoriteHideButtonsWrapper}>
                 <ButtonWithShadowSmall
+                  testID={
+                    isHidden
+                      ? TestID.ButtonMovieIsHidden
+                      : TestID.ButtonMovieIsShowed
+                  }
                   isIcon
                   iconName={isHidden ? 'md-eye-off-outline' : 'eye-outline'}
                   onPress={onHiddenToggle}
@@ -128,6 +136,11 @@ const FilmDetailsScreen: React.FunctionComponent = () => {
                   percentageWidth={40}
                 />
                 <ButtonWithShadowSmall
+                  testID={
+                    isFavorite
+                      ? TestID.ButtonIsFavorite
+                      : TestID.ButtonIsNotFavorite
+                  }
                   isIcon
                   iconColor={
                     isFavorite

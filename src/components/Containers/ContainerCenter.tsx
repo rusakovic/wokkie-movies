@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 
 interface ContainerCenterProps {
+  testID?: string;
   style?: ViewStyle;
   backgroundColor?: ViewStyle['backgroundColor'];
   alignItemsCenter?: boolean;
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
 });
 
 const ContainerCenter: React.FunctionComponent<ContainerCenterProps> = ({
+  testID,
   children,
   style,
   alignItemsCenter,
@@ -180,7 +182,11 @@ const ContainerCenter: React.FunctionComponent<ContainerCenterProps> = ({
     marginHorizontal10 && styles.marginHorizontal10,
     marginHorizontal15 && styles.marginHorizontal15,
   ];
-  return <View style={[containerCenterStyle, style]}>{children}</View>;
+  return (
+    <View style={[containerCenterStyle, style]} testID={testID}>
+      {children}
+    </View>
+  );
 };
 
 export default ContainerCenter;

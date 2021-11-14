@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ButtonWithShadowSmallProps {
+  testID?: string;
   style?: CSSProperties;
   text?: string;
   onPress: () => void;
@@ -22,6 +23,7 @@ interface ButtonWithShadowSmallProps {
 }
 
 const ButtonWithShadowSmall: FC<ButtonWithShadowSmallProps> = ({
+  testID,
   style,
   text,
   onPress,
@@ -42,6 +44,7 @@ const ButtonWithShadowSmall: FC<ButtonWithShadowSmallProps> = ({
 
   return (
     <Pressable
+      testID={testID}
       style={({pressed}) => [
         buttonStyles,
         !isDisabled && pressed && styles.pressed,
