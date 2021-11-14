@@ -43,6 +43,7 @@ export function* FetchMovieResultRequestedSaga(): Generator {
     yield put(fetchMovieSucceeded(genresWithKeys));
   } catch (error) {
     if (error instanceof Error) {
+      console.log('here');
       yield call(console.error, error);
       const errorMessage = `Movies not fetched => ${error.message}`;
       yield put(fetchMovieFailed(errorMessage));

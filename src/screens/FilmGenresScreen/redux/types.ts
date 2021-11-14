@@ -1,4 +1,3 @@
-import {WookieMoviesType} from 'types/generalTypes';
 import {GenresWithKeysType} from '../types';
 
 // SEARCH MOVIE

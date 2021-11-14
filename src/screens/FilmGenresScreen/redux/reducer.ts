@@ -16,6 +16,8 @@ const FetchMovieResultReducer = (
       return {
         ...state,
         isLoading: true,
+        isFailed: FetchMovieResultInitialState.isFailed,
+        errorMessage: FetchMovieResultInitialState.errorMessage,
       };
     case ActionType.FetchMovieSucceeded:
       return {
@@ -23,6 +25,14 @@ const FetchMovieResultReducer = (
         isLoading: false,
         movies: action.movies,
       };
+    case ActionType.FetchMovieFailed:
+      return {
+        ...state,
+        isLoading: false,
+        isFailed: true,
+        errorMessage: action.error,
+      };
+
     default:
       return state;
   }
