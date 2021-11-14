@@ -68,6 +68,7 @@ The finn GmbH Team
 
 ## How to run the app on simulator
 
+0. Add API key to `.env` file. File structure is presented in `.sample.env` file.
 1. `npm i`
 2. `npx pod install`
 3. `npm run ios` or `npm run android` for running the app on the simulator
