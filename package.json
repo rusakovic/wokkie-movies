@@ -5,6 +5,7 @@
   "scripts": {
     "android": "ENVFILE=.env react-native run-android",
     "ios": "ENVFILE=.env react-native run-ios",
+    "device-ios": "react-native run-ios  --device 'iPhone Max'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"

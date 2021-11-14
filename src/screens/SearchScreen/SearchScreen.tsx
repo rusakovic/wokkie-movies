@@ -121,6 +121,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
           <TextInput
             value={searchText}
             placeholder="search..."
+            placeholderTextColor={styled.colors.grey60opacity}
             style={styles.searchField}
             onChangeText={setSearchText}
           />
