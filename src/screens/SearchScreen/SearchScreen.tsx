@@ -91,7 +91,7 @@ const SearchScreen: React.FunctionComponent<SearchScreenProps> = ({
       searchToTop();
     }, 1000);
 
-    return (): void => clearTimeout(timerId);
+    return () => clearTimeout(timerId);
   }, [searchText, dispatch]);
 
   const onClearSearchInputHandler = () => {
