@@ -82,7 +82,7 @@ Jest
 Detox
 
 1. For Detox test:
-2. Setup detox env on your machine: https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md
+2. Setup detox env on your machine: https://wix.github.io/Detox/docs/introduction/getting-started
 3. Build test app: ios: `detox build -c ios` android: `detox build -c android`
 4. Run detox tests: ios: `detox test -c ios` android: `detox test -c android`
 
