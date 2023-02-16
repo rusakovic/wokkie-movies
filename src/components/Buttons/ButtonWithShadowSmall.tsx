@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {IconProps} from 'react-native-vector-icons/Icon';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ButtonWithShadowSmallProps {
@@ -16,7 +17,7 @@ interface ButtonWithShadowSmallProps {
   isDisabled?: boolean;
   isMarginTop5?: boolean;
   isIcon?: boolean;
-  iconName?: string;
+  iconName?: IconProps['name'];
   iconSize?: number;
   percentageWidth?: number;
   iconColor?: string;
@@ -52,7 +53,7 @@ const ButtonWithShadowSmall: FC<ButtonWithShadowSmallProps> = ({
       ]}
       onPress={onPress}
       disabled={isDisabled}>
-      {isIcon && (
+      {isIcon && iconName && (
         <Icon
           style={styles.icon}
           name={iconName}

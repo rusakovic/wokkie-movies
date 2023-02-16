@@ -68,7 +68,7 @@ The finn GmbH Team
 
 ## How to run the app on simulator
 
-0. Add API key to `.env` file. File structure is presented in `.sample.env` file.
+0. Add API key to `.env` file. File structure is presented in `.sample.env` file. API key is "Wookie2019"
 1. `npm i`
 2. `npx pod install`
 3. `npm run ios` or `npm run android` for running the app on the simulator
@@ -192,3 +192,4 @@ DETOX:
 JEST:
 
   <img src="https://user-images.githubusercontent.com/17801144/141695948-eb23e184-8a91-4e52-abf1-42b37243a299.png" width="400" >
+`

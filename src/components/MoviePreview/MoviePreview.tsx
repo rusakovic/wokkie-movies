@@ -9,7 +9,7 @@ import {MoviePreviewStyles} from './styles';
 import {MoviePreviewProps} from './types';
 
 const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({movie}) => {
-  const {poster, title} = movie;
+  const {poster, title, id} = movie;
   const {navigate} =
     useNavigation<
       StackNavigationProp<RootStackParamList, Routes.FilmDetailsScreen>
@@ -22,7 +22,7 @@ const MoviePreview: React.FunctionComponent<MoviePreviewProps> = ({movie}) => {
   };
 
   return (
-    <Pressable onPress={onNavigationHandler} testID={movie.id}>
+    <Pressable onPress={onNavigationHandler} testID={id}>
       <ContainerCenter
         isVerticalCenter
         style={MoviePreviewStyles.posterWrapper}>

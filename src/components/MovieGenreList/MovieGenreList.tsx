@@ -5,11 +5,17 @@ import ContainerCenter from 'components/Containers/ContainerCenter';
 import {MoviePreview} from 'components';
 import {MovieGenreListProps} from './types';
 import {MovieGenreListStyles} from './styles';
+import {ListRenderItem} from 'react-native';
+import {Movie} from 'types/generalTypes';
 
 const MovieGenreList: React.FunctionComponent<MovieGenreListProps> = ({
   genre,
   movies,
 }) => {
+  const renderItem: ListRenderItem<Movie> = ({item}) => (
+    <MoviePreview movie={item} />
+  );
+
   return (
     <ContainerCenter isMarginVertical2>
       <DefaultText fontFamilyMedium uppercased>
@@ -21,9 +27,7 @@ const MovieGenreList: React.FunctionComponent<MovieGenreListProps> = ({
           data={movies}
           keyExtractor={item => item.id}
           horizontal
-          renderItem={({item}) => {
-            return <MoviePreview movie={item} />;
-          }}
+          renderItem={renderItem}
         />
       </ContainerCenter>
     </ContainerCenter>
